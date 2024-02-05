@@ -111,7 +111,7 @@ def count_plot(df):
     return fig
 
 
-def flux_plot(df, start_year, end_year):
+def flux_plot(flux):
     """Generates a bar plot showing the flux of auction houses opening and closing.
 
     Args:
@@ -124,8 +124,8 @@ def flux_plot(df, start_year, end_year):
     """
     fig, ax = plt.subplots()                                                                                       
 
-    ax.bar(flux['Year'], flux['Open'], label = 'open', alpha = 0.5)
-    ax.bar(flux['Year'], flux['Close'], label = 'close', alpha = 0.5)
+    ax.bar(flux['Year'], flux['Count_x'], label = 'open', alpha = 0.5)
+    ax.bar(flux['Year'], flux['Count_y'], label = 'close', alpha = 0.5)
     ax.set_ylabel('Count of auction houses open/close')
     ax.set_xlabel('Year')
     ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
@@ -231,6 +231,9 @@ with st.sidebar:
     'AL')
     state_all = st.checkbox('View all States')
 
+    year_column = 'SIC'+str(selected_year)[-2:]
+    df_chloropleth = df[df[year_column].notnull()]
+
     # Data filtering based on selections of select all checkboxes
     if state_all:
         df2 = get_subset(df, states)
@@ -241,7 +244,6 @@ with st.sidebar:
     df_revenue = calculate_revenue(df2, year_range[0], year_range[1])
     
     # Filter for map data
-    year_column = 'SIC'+str(selected_year)[-2:]
     df_map = df2[df2[year_column].notnull()]
        
 
@@ -262,7 +264,7 @@ with c2:
 with c3:
     plot = st.map(data = df_map, latitude = 'Latitude', longitude = 'Longitude') # Geographical map
 with c4:
-    plot2 = st.pyplot(flux_plot(df2, year_range[0], year_range[1])) # Business flux plot
+    plot2 = st.pyplot(flux_plot(flux)) # Business flux plot
 with c5[0]:
-    choropleth_fig = create_choropleth(df)
+    choropleth_fig = create_choropleth(df_chloropleth)
     plot = st.plotly_chart(choropleth_fig) # Choropleth map
