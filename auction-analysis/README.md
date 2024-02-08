@@ -5,16 +5,18 @@
 
 (1.5) Set up environment
 - Set up Conda environment
-    - conda create --name <myenv> python=3.9.16
+    - conda create --name <myenv> python=3.9.16 (**TODO: myenv not showing up, maybe use `` to create in-line code**)
 - Install necessary packages (from auction-analysis directory)
     - Run pip install -r requirements.txt
 
 (2) Notebook Explanation & Instructions
-- The notebook EDA_pipeline.ipynb takes in raw NETS and geojson datasets and generates two cleaned datasets utilized in our streamlit app (auction_info.csv and flux.csv)
+- The notebook EDA_pipeline.ipynb takes in raw NETS and geojson datasets and generates two cleaned datasets utilized in our streamlit app (auction_info.csv and flux.csv)\
+(**TODO: notebook error: need to install kernel `conda install -n auction ipykernel --update-deps --force-reinstall`**)
 - Note that running the notebook is not required, it is here to show how we generated files that we used in our streamlit app
-- To run the notebook, download the following five files from the Drive to auction_analysis/data/raw:
+- To run the notebook, download the following five files from the Drive to auction_analysis/data/raw:\
+  (**TODO: add \ at the end to start new line**)\
     from Data/raw/nets:
-        - NETSData2022_RAFI(WithAddresses).txt
+        - NETSData2022_RAFI(WithAddresses).txt\
         - NAICS2022_RAFI.csv
         - 2022-NAICS-Codes-6-digit.csv
         - rafi_sic.csv
