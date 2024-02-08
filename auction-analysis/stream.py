@@ -9,6 +9,7 @@ import json
 import plotly.express as px
 
 # read in data
+# TODO: would be better to put cleaned datasets in a separate folder
 df = pd.read_csv("data/raw/auction_info.csv")
 flux = pd.read_csv("data/raw/flux.csv")
 # filter data by state and sic code
