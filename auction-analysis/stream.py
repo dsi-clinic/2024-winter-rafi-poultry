@@ -10,8 +10,8 @@ import plotly.express as px
 
 # read in data
 # TODO: would be better to put cleaned datasets in a separate folder
-df = pd.read_csv("data/raw/auction_info.csv")
-flux = pd.read_csv("data/raw/flux.csv")
+df = pd.read_csv("data/auction_info.csv")
+flux = pd.read_csv("data/flux.csv")
 # filter data by state and sic code
 def get_subset(df, condition_state):
     """Filters data based on specified states.
@@ -134,8 +134,8 @@ def flux_plot(flux):
     """
     fig, ax = plt.subplots()
 
-    ax.bar(flux["Year"], flux["Count_x"], label="open", alpha=0.5)
-    ax.bar(flux["Year"], flux["Count_y"], label="close", alpha=0.5)
+    ax.bar(flux.iloc[:,1], flux.iloc[:,2], label="open", alpha=0.5)
+    ax.bar(flux.iloc[:,1], flux.iloc[:,3], label="close", alpha=0.5)
     ax.set_ylabel("Count of auction houses open/close")
     ax.set_xlabel("Year")
     ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
