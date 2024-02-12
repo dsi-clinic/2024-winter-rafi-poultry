@@ -14,16 +14,21 @@ df = pd.read_csv("data/raw/auction_info.csv")
 flux = pd.read_csv("data/raw/flux.csv")
 # filter data by state and sic code
 def get_subset(df, condition_state):
-    """Filters data based on specified SIC descriptions and states.
+    """Filters data based on specified states.
 
     Args:
         df: DataFrame containing auction information.
         condition_state: List of states to filter by.
 
     Returns:
-        A filtered DataFrame based on the specified SIC descriptions and states.
+        A filtered DataFrame based on the state option.
     """
-    df_new = df[df["State"].isin(condition_state)]
+    if len(condition_state) == 0: 
+        df_new = df
+    elif condition_state[0] == 'All state':
+        df_new = df
+    else: 
+        df_new = df[df["State"].isin(condition_state)]
 
     return df_new
 
@@ -212,8 +217,7 @@ def create_choropleth(df):
 
 
 ## Create the app
-sics = list(set(df["SICDescription"]))
-states = list(set(df["State"]))
+states = ['All state'] + list(set(df["State"]))
 
 st.set_page_config(layout="wide")  # whole page config set as fullscreen
 
@@ -232,25 +236,20 @@ with st.sidebar:
 
     # State type selection (multiple and checkbox for all)
     state_option = st.multiselect("Select a state", states, "AL")
-    state_all = st.checkbox("View all States")
+    # state_all = st.checkbox("View all States")
 
     year_column = "SIC" + str(selected_year)[-2:]
     df_chloropleth = df[df[year_column].notnull()]
 
-    # Data filtering based on selections of select all checkboxes
-    if state_all:
-        df2 = get_subset(df, states)
-    else:
-        df2 = get_subset(df, state_option)
-
+    # Data filtering based on selections of state
+    df2 = get_subset(df, state_option)
     # Calculate revenue based on filtered data + looking at year range: revenue is always thus bound to these two filters
     df_revenue = calculate_revenue(df2, year_range[0], year_range[1])
 
     # Filter for map data
     df_map = df2[df2[year_column].notnull()]
-
     # Apply filters for the chloropleth map: namely, the single year selection index
-    # df_filtered_for_map = filter_by_operational_year(df2, selected_year)
+    df_filtered_for_map = filter_by_operational_year(df2, selected_year)
 
 
 # Main layout configuration: 2*2 grid + 1 full-width display on bottom
