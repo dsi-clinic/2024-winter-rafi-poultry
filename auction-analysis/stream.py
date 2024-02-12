@@ -134,8 +134,8 @@ def flux_plot(flux):
     """
     fig, ax = plt.subplots()
 
-    ax.bar(flux.iloc[:,1], flux.iloc[:,2], label="open", alpha=0.5)
-    ax.bar(flux.iloc[:,1], flux.iloc[:,3], label="close", alpha=0.5)
+    ax.bar(flux["Year"], flux["Count_x"], label="open", alpha=0.5)
+    ax.bar(flux["Year"], flux["Count_y"], label="close", alpha=0.5)
     ax.set_ylabel("Count of auction houses open/close")
     ax.set_xlabel("Year")
     ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
