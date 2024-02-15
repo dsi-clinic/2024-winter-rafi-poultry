@@ -264,7 +264,7 @@ with c2:
     plot2 = st.pyplot(count_plot(df_revenue))  # Count of auction houses plot
 with c3:
     plot = st.map(
-        data=df_map, latitude="Latitude", longitude="Longitude"
+        data=df_filtered_for_map, latitude="Latitude", longitude="Longitude"
     )  # Geographical map
 with c4:
     plot2 = st.pyplot(flux_plot(flux))  # Business flux plot
