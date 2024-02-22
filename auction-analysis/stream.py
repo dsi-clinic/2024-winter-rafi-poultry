@@ -9,9 +9,8 @@ import json
 import plotly.express as px
 
 # read in data
-# TODO: would be better to put cleaned datasets in a separate folder
-df = pd.read_csv("data/auction_info.csv")
-flux = pd.read_csv("data/flux.csv")
+df = pd.read_csv("data/cleaned/auction_info.csv")
+flux = pd.read_csv("data/cleaned/flux.csv")
 # filter data by state and sic code
 def get_subset(df, condition_state):
     """Filters data based on specified states.
