@@ -1,10 +1,14 @@
 (1) Establish auction-analysis directory structure
+
 - auction-analysis
     - data
         - raw
         - cleaned
 
+`TODO: the main point is the streamlit app, so explain how to run that as the primary thing in the README. Include the information about the notebooks, etc. after`
+
 (1.5) Set up environment
+
 - Set up Conda environment
     - `conda create --name <myenv> python=3.9.16`\
 - Install necessary packages (from auction-analysis directory)\
@@ -26,6 +30,8 @@
     - Alternatively, you can also download flux.csv and auction_info.csv from Data/auction_info
 
 (2.5)
+Link to download: https://drive.google.com/drive/folders/1wjdTuK_DPFQba7k9Qx0lt_dvDV6DBnzR?usp=drive_link
+
 - To run the Streamlit app, download the following three files from the Drive to auction_analysis/data/raw:
     - from Data/auction_info download:
         - auction_info.csv
@@ -37,6 +43,10 @@
 - Run command is `(from auction-analysis directory) streamlit run stream.py`
 
 (3) Make File Commands & Instructions (running in Docker):
+
 - Below are two commands for building and then running the streamlit app in Docker
-- ```make build-streamlit``` will build the Docker image for the streamlit scripts
-- ```make run-streamlit``` will run the Docker container from the streamlit image
+- `make build-streamlit` will build the Docker image for the streamlit scripts
+- `make run-streamlit` will run the Docker container from the streamlit image and runs the streamlit app
+
+(4) Additional resources on streamlit app
+Streamlit app will be running in your browswer as a dynamic dashboard. Here is more information on the app: https://streamlit.io/
