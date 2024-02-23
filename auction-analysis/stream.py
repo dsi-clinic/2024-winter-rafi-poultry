@@ -12,7 +12,7 @@ import plotly.express as px
 df = pd.read_csv("data/raw/auction_info.csv")
 flux = pd.read_csv("data/raw/flux.csv")
 # filter data by state and sic code
-def get_subset(df, condition_state):
+def get_subset(df, condition_state=None):
     """Filters data based on specified SIC descriptions and states.
 
     Args:
@@ -22,7 +22,8 @@ def get_subset(df, condition_state):
     Returns:
         A filtered DataFrame based on the specified SIC descriptions and states.
     """
-    df_new = df[df["State"].isin(condition_state)]
+    if condition_state:
+        df_new = df[df["State"].isin(condition_state)]
 
     return df_new
 
@@ -237,9 +238,7 @@ with st.sidebar:
     df_chloropleth = df[df[year_column].notnull()]
 
     # Data filtering based on selections of select all checkboxes
-    if state_all:
-        df2 = get_subset(df, states)
-    else:
+    if not state_all:
         df2 = get_subset(df, state_option)
 
     # Calculate revenue based on filtered data + looking at year range: revenue is always thus bound to these two filters
