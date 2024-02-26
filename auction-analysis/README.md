@@ -20,7 +20,7 @@
 
 - Streamlit app will be running in your browswer as a dynamic dashboard
   - Here is more information on the app: https://streamlit.io/
-- To run the Streamlit app, download the following three files from the Drive to auction_analysis/data/raw `TODO: this path is wrong - directory has a dash in the repo`:
+- To run the Streamlit app, download the following three files from the Drive to auction_analysis/data/raw `TODO: this path is wrong - directory has a dash in the repo. The app also expects some of tthe data in the cleaned folder. Having cleaned and raw here seems confusing and unnecessary?`:
   - from Data/auction_info download:
     - auction_info.csv
     - flux.csv
