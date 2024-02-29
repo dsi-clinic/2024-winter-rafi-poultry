@@ -35,7 +35,7 @@
 
 (4) Notebook Explanation & Instructions
 - The notebooks were used for two purposes: initial EDA and creating cleaned datasets (auction_info.csv and flux.csv)
-    - Therefore, running the notebooks is not necessary for running the streamlit app
+    - Therefore, if downloaded from the drive, running the notebooks is not necessary for running the streamlit app
 - To run the notebook, there are five raw datafiles that are needed to be placed in (local) auction-analysis/data/raw:
 - From (Drive - https://drive.google.com/drive/folders/1ayKn9SdtrIAO-q8AU9ScmuBK8Qv9ZlbS) Data/raw/nets:
     - NETSData2022_RAFI(WithAddresses).txt
