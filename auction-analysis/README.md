@@ -28,7 +28,7 @@
     - `make build-streamlit` will build the Docker image for the streamlit scripts
     - `make run-streamlit` will run the Docker container from the streamlit image and runs the streamlit app
 - Running locally:
-    - cd into /Users/<username>/2024-winter-rafi-poultry/auction-analysis
+    - cd into 2024-winter-rafi-poultry/auction-analysis
     - Run command is (from directory that contains the app) `streamlit run stream.py`
 
 - Link to download: https://drive.google.com/drive/folders/1wjdTuK_DPFQba7k9Qx0lt_dvDV6DBnzR?usp=drive_link
