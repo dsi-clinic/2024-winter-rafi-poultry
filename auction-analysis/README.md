@@ -6,7 +6,6 @@
     - cleaned
 
 (1.5) Set up environment
-- First make sure you install conda: `conda install -n auction ipykernel --update-deps --force-reinstall`
 - Set up Conda environment
   - `conda create --name <myenv> python=3.9.16`
 - Install necessary packages (from auction-analysis directory)
