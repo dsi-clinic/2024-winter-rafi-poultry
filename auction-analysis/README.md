@@ -32,7 +32,7 @@ To run the Streamlit app, download the required data files from Google Drive int
 Streamlit app will be running in your browswer as a dynamic dashboard. (Additional documentation on Streamlit: https://streamlit.io/)
 - **Option 1: Running in Docker:**
   
-  - Ensure Docker Desktop is running. (install [docker desktop](https://docs.docker.com/desktop/))
+  - Ensure Docker Desktop is running.
   
   - cd into `2024-winter-rafi-poultry/auction-analysis`
   
