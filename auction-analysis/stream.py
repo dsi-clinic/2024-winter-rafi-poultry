@@ -1,7 +1,5 @@
-# After installation of streamlit, type in terminal: streamlit run stream.py and view in chrome
 import streamlit as st
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import geopandas as gpd
@@ -11,8 +9,11 @@ import plotly.express as px
 # read in data
 df = pd.read_csv("data/cleaned/auction_info.csv")
 flux = pd.read_csv("data/cleaned/flux.csv")
+
+
 # filter data by state and sic code
 def get_subset(df, condition_state):
+
     """Filters data based on specified states.
 
     Args:
@@ -22,20 +23,22 @@ def get_subset(df, condition_state):
     Returns:
         A filtered DataFrame based on the state option.
     """
-    if len(condition_state) == 0: 
+
+    if len(condition_state) == 0:
         df_new = df
-    elif condition_state[0] == 'All state':
+    elif condition_state[0] == "All state":
         df_new = df
-    else: 
+    else:
         df_new = df[df["State"].isin(condition_state)]
 
     return df_new
 
 
-## Functions
+# Functions
 
 
 def calculate_revenue(df, start_year, end_year):
+
     """Calculates revenue and auction count for each year in the specified range.
 
     Args:
@@ -44,8 +47,10 @@ def calculate_revenue(df, start_year, end_year):
         end_year: Ending year of the range.
 
     Returns:
-        A new DataFrame with years, revenue in millions, and revenue per auction in thousands.
+        A new DataFrame with years, revenue in millions
+          and revenue per auction in thousands.
     """
+
     revenue = []
     auction_count = []
     median_revenue = []
@@ -70,8 +75,8 @@ def calculate_revenue(df, start_year, end_year):
     return df_new
 
 
-# revenue plot
 def revenue_plot(df):
+
     """Generates a plot of total revenue over the years.
 
     Args:
@@ -97,6 +102,7 @@ def revenue_plot(df):
 
 
 def count_plot(df):
+
     """Generates a plot of the count of auction houses over the years.
 
     Args:
@@ -105,6 +111,7 @@ def count_plot(df):
     Returns:
         A matplotlib plot showing the count trend over the years.
     """
+
     fig, ax1 = plt.subplots()
     ax1.plot(df["Year"], df["Revenue(Millions)"], "g-")
     ax1.set_xlabel("Year")
@@ -121,6 +128,7 @@ def count_plot(df):
 
 
 def flux_plot(flux):
+
     """Generates a bar plot showing the flux of auction houses opening and closing.
 
     Args:
@@ -129,8 +137,10 @@ def flux_plot(flux):
         end_year: Ending year of the range for the plot.
 
     Returns:
-        A matplotlib plot showing the number of auction houses opened and closed each year.
+        A matplotlib plot showing the number of auction houses
+          opened and closed each year.
     """
+
     fig, ax = plt.subplots()
 
     ax.bar(flux["Year"], flux["Count_x"], label="open", alpha=0.5)
@@ -144,8 +154,8 @@ def flux_plot(flux):
     return plt
 
 
-# Helper function to the chloropleth map to check if an auction house is operational in a specific year and then filter a dataframe by operational year
 def is_operational(year_to_check, opening_year, closing_year):
+
     """Checks if an auction house was operational in a given year.
 
     Args:
@@ -154,33 +164,46 @@ def is_operational(year_to_check, opening_year, closing_year):
         closing_year: The year the auction house closed.
 
     Returns:
-        Boolean indicating whether the auction house was operational in the year_to_check.
+        Boolean indicating whether the auction house was operational
+          in the year_to_check.
     """
+
     if pd.isna(closing_year):
-        closing_year = float("10000")  # placeholder value for if it has not closed yet
+        # placeholder value for if it has not closed yet
+        closing_year = float("10000")
     return opening_year <= year_to_check <= closing_year
 
 
 def filter_by_operational_year(df, year_to_check):
-    """Filters the DataFrame for auction houses operational in a specific year.
+
+    """Filters the DataFrame for auction houses operational
+      in a specific year.
 
     Args:
-        df: DataFrame containing auction house data with opening and closing years.
-        year_to_check: The year to filter the operational auction houses.
+        df: DataFrame containing auction house data
+          with opening and closing years.
+        year_to_check: The year to filter the
+          operational auction houses.
 
     Returns:
-        A filtered DataFrame with auction houses operational in the specified year.
+        A filtered DataFrame with auction houses
+          operational in the specified year.
     """
+
     return df[
         df.apply(
-            lambda x: is_operational(year_to_check, x["OpeningYear"], x["ClosingYear"]),
+            lambda x: is_operational(year_to_check,
+                                     x["OpeningYear"],
+                                     x["ClosingYear"]),
             axis=1,
         )
     ]
 
 
 def create_choropleth(df):
-    """Creates a choropleth map showing the count of auction houses per state.
+
+    """Creates a choropleth map showing the count
+      of auction houses per state.
 
     Args:
         df: DataFrame containing auction house data.
@@ -188,12 +211,17 @@ def create_choropleth(df):
     Returns:
         A Plotly choropleth map visualization.
     """
+
     # Aggregate data to get the count of auction houses per state
-    state_counts = df.groupby("State").size().reset_index(name="AuctionHouseCount")
+    state_counts = df.groupby("State").size().reset_index(
+        name="AuctionHouseCount")
 
     # Load GeoJSON and merge with the aggregated data
     us_map = gpd.read_file("data/raw/states.geojson")
-    map_df = us_map.merge(state_counts, how="left", left_on="STUSPS", right_on="State")
+    map_df = us_map.merge(state_counts,
+                          how="left",
+                          left_on="STUSPS",
+                          right_on="State")
 
     # Convert GeoDataFrame to JSON
     json_data = json.loads(map_df.to_json())
@@ -215,10 +243,10 @@ def create_choropleth(df):
     return fig
 
 
-## Create the app
-states = ['All state'] + list(set(df["State"]))
+states = ["All state"] + list(set(df["State"]))
 
-st.set_page_config(layout="wide")  # whole page config set as fullscreen
+# whole page config set as fullscreen
+st.set_page_config(layout="wide")
 
 with st.sidebar:
     st.title("RAFI Companies Analysis")
@@ -230,7 +258,11 @@ with st.sidebar:
 
     # Single year selection slider
     selected_year = st.slider(
-        "Select a Year For Map", min_value=1990, max_value=2022, value=2022, step=1
+        "Select a Year For Map",
+        min_value=1990,
+        max_value=2022,
+        value=2022,
+        step=1
     )
 
     # State type selection (multiple and checkbox for all)
@@ -242,12 +274,13 @@ with st.sidebar:
 
     # Data filtering based on selections of state
     df2 = get_subset(df, state_option)
-    # Calculate revenue based on filtered data + looking at year range: revenue is always thus bound to these two filters
+    # Calculate revenue based on filtered data + looking at year range:
+    # revenue is always thus bound to these two filters
     df_revenue = calculate_revenue(df2, year_range[0], year_range[1])
 
     # Filter for map data
     df_map = df2[df2[year_column].notnull()]
-    # Apply filters for the chloropleth map: namely, the single year selection index
+    # Apply filters for the chloropleth map: the single year selection index
     df_filtered_for_map = filter_by_operational_year(df2, selected_year)
 
 
